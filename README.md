@@ -3,9 +3,10 @@ Angular Enum Flag Directive
 
 # Description
 
-Directive to change a model based on enum flags with checkboxes.
+Flags enumerations are used for masking bit fields and doing bitwise comparisons. They are the correct design to use when multiple enumeration values can be specified at the same time.
+This directive can be used on multiple checkboxes to perform a bitwise comparison on a model to determine if the checkbox should be checked or not and will update the model on any change.
 
-Multiple select boxes which needs to be selected and deselected based on an Enum with flags. You don't need the Enum Object itself to use this directive. 
+## Simple example
 
 Consider you have the following Enum:
 
@@ -18,7 +19,7 @@ var ColorEnum = Object.freeze({
 	});
 ```
 
-And want to control the following model in your controller with checkboxes:
+And want to control the following model <i>$scope.selectedColors</i> in your controller with checkboxes:
 
 ```javascript
 angular.module('MyApp').controller('MyController', ['$scope',
@@ -28,6 +29,8 @@ angular.module('MyApp').controller('MyController', ['$scope',
 ]);
 ```
 
+Use the following HTML code (hard coded values):
+
 ```html
 <input name="RED" type="checkbox" ng-enum-flag="1" ng-enum-model="selectedColors"  />
 <input name="GREEN" type="checkbox" ng-enum-flag="2" ng-enum-model="selectedColors" />
@@ -35,9 +38,47 @@ angular.module('MyApp').controller('MyController', ['$scope',
 <input name="YELLOW" type="checkbox" ng-enum-flag="8" ng-enum-model="selectedColors" />
 ```
 
-> You can use the ColorEnum object to determine the values by using ng-enum-flag="ColorEnum[0]" when ColorEnum is available within the scope
+## Use the ColorEnum Object to determine the <i>ng-enum-flag</i> values
 
-# Usage
+You can use the ColorEnum object to determine the values by using ng-enum-flag="ColorEnum.RED" when ColorEnum is available within the scope.
+
+First define your ColorEnum in a factory so you can inject it as a singleton throughout your app:
+
+```javascript
+angular.module('MyApp').factory('ColorEnum', [
+    function () {
+        return Object.freeze({
+			RED: 1, 
+			GREEN: 2, 
+			BLUE: 4,
+			YELLOW: 8
+		});
+    }
+]);
+```
+
+Then inject it in your controller and bind it to your scope:
+
+```javascript
+angular.module('MyApp').controller('MyController', ['$scope','ColorEnum',
+    function ($scope, ColorEnum) {
+		$scope.ColorEnum = ColorEnum;
+		$scope.selectedColors = 7; // Default of RED, GREEN and BLUE
+	}
+]);
+```
+
+Use the ColorEnum object in your HTML code:
+
+```html
+<input name="RED" type="checkbox" ng-enum-flag="ColorEnum.RED" ng-enum-model="selectedColors"  />
+<input name="GREEN" type="checkbox" ng-enum-flag="ColorEnum.GREEN" ng-enum-model="selectedColors" />
+<input name="BLUE" type="checkbox" ng-enum-flag="ColorEnum.BLUE" ng-enum-model="selectedColors" />
+<input name="YELLOW" type="checkbox" ng-enum-flag="ColorEnum.YELLOW" ng-enum-model="selectedColors" />
+```
+
+
+# Installation
 
 Include the directive in your app:
 
@@ -54,5 +95,7 @@ var myApp = angular.module('MyApp', ['enumFlag']);
 Use the <i>ng-enum-flag</i> attribute to indiciate the value of the option and the <i>ng-enum-model</i> attribute to bind to your model.
 
 ```html
-<input name="RED" type="checkbox" ng-enum-flag="1" ng-enum-model="selectedColors" />
+<input type="checkbox" ng-enum-flag="1" ng-enum-model="selectedValues" />
+<input type="checkbox" ng-enum-flag="2" ng-enum-model="selectedValues" />
+<input type="checkbox" ng-enum-flag="4" ng-enum-model="selectedValues" />
 ```
