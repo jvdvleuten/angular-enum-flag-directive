@@ -1,0 +1,1 @@
+"use strict";angular.module("enumFlag").directive("ngEnumFlag",function(){return{restrict:"A",scope:{value:"=ngEnumFlag",model:"=ngEnumModel"},link:function(e,t){var n=t[0];t.on("change",function(){e.$apply(function(){if(n.checked){e.model+=e.value}else{e.model-=e.value}})});e.$watch("model",function(){n.checked=(e.model&e.value)==e.value})}}})
