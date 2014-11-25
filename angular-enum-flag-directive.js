@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('enumFlag').directive('ngEnumFlag', function () {
+angular.module('enumFlag', []).directive('ngEnumFlag', function () {
     return {
         restrict: 'A',
         scope: {

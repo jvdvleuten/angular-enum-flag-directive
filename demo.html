@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>angular-enum-flag-directive example</title>
+  
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+	  
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js'></script>
+  
+</head>
+<body>
+	<div ng-app="MyApp" class="container">
+		<div ng-controller="MyController">
+		<h1>angular-enum-flag-directive example</h1>
+		<h2>Example options</h2>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" ng-enum-flag="ColorEnum.RED" ng-enum-model="selectedColors" /> RED
+			</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" ng-enum-flag="ColorEnum.GREEN" ng-enum-model="selectedColors" /> GREEN
+			</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" ng-enum-flag="ColorEnum.BLUE" ng-enum-model="selectedColors" /> BLUE
+			</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" ng-enum-flag="ColorEnum.YELLOW" ng-enum-model="selectedColors" /> YELLOW
+			</label>
+		</div>
+		<h2>Output</h2>
+		<div>Value of selectedColors: {{ selectedColors }}</div>
+		</div>
+	</div>
+	  
+	<script src="angular-enum-flag-directive-min.js"></script>
+	<script type='text/javascript'>
+		// App
+		var myApp = angular.module('MyApp', ['enumFlag']);
+
+		// ColorEnum Factory
+		angular.module('MyApp').factory('ColorEnum', [
+			function () {
+				return Object.freeze({
+					RED: 1,
+					GREEN: 2,
+					BLUE: 4,
+					YELLOW: 8
+				});
+			}
+		]);
+
+		// Controller
+		angular.module('MyApp').controller('MyController', ['$scope','ColorEnum',
+			function ($scope, ColorEnum) {
+				$scope.ColorEnum = ColorEnum;
+				$scope.selectedColors = 7; // Default of RED, GREEN and BLUE
+			}
+		]);
+	</script>
+
+</body>
+
+</html>
+
