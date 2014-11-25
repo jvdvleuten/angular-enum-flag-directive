@@ -6,6 +6,10 @@ Angular Enum Flag Directive
 Flags enumerations are used for masking bit fields and doing bitwise comparisons. They are the correct design to use when multiple enumeration values can be specified at the same time.
 This directive can be used on multiple checkboxes to perform a bitwise comparison on a model to determine if the checkbox should be checked or not and will update the model on any change.
 
+# Demo
+
+You can find a demo here: https://cdn.rawgit.com/jvdvleuten/angular-enum-flag-directive/master/demo.html
+
 ## Simple example
 
 Consider you have the following Enum:
