@@ -5,16 +5,25 @@ angular.module('enumFlag', []).directive('ngEnumFlag', function () {
         restrict: 'A',
         scope: {
             value: '=ngEnumFlag',
-            model: '=ngEnumModel'
+            model: '=ngEnumModel',
+            bitwise: '=ngBitwise'
         },
         link: function (scope, element) {
             var checkbox = element[0];
             element.on('change', function () {
                 scope.$apply(function () {
-                    if (checkbox.checked) {
-                        scope.model += scope.value;
+                    if (!scope.bitwise) {
+                        if (checkbox.checked) {
+                            scope.model = parseInt(scope.model) + parseInt(scope.value);
+                        } else {
+                            scope.model = parseInt(scope.model) - parseInt(scope.value);
+                        }
                     } else {
-                        scope.model -= scope.value;
+                        if (checkbox.checked) {
+                            scope.model = parseInt(scope.model) | parseInt(scope.value);
+                        } else {
+                            scope.model = parseInt(scope.model) &~ parseInt(scope.value);
+                        }
                     }
                 });
             });
