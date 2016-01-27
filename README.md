@@ -103,3 +103,11 @@ Use the <i>ng-enum-flag</i> attribute to indiciate the value of the option and t
 <input type="checkbox" ng-enum-flag="2" ng-enum-model="selectedValues" />
 <input type="checkbox" ng-enum-flag="4" ng-enum-model="selectedValues" />
 ```
+
+If your enum represents a bitfield, add the <i>ng-bitwise</i> attribute.
+
+```html
+<input type="checkbox" ng-enum-flag="1" ng-enum-model="selectedValues" ng-bitwise="true" />
+<input type="checkbox" ng-enum-flag="2" ng-enum-model="selectedValues" ng-bitwise="true" />
+<input type="checkbox" ng-enum-flag="4" ng-enum-model="selectedValues" ng-bitwise="true" />
+```
